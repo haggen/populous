@@ -6,21 +6,18 @@
  */
 ;(function($, undefined) {
 
-  function Filler(input, map) {
+  function Filler(input, config) {
     this.input = $(input);
-    this.source = input.data('source');
-
-    if(map && map.call) {
-      this.map = map;
-    }
-
-    this.load();
+    this.config = $.extend({
+      url: '',
+      method: 'GET'
+    }, config);
   }
 
   Filler.prototype = {
     map: function(response) {
-      return $.map(response, function(label, index) {
-        return [label, index];
+      return $.map(response, function(label) {
+        return [[label, label]]; // jQuery#map make it flat, so we add more depth
       });
     },
 
@@ -28,18 +25,13 @@
       this.input.append('<option value="' + (value || label) + '">' + label + '</option>');
     },
 
-    clear: function() {
-      this.input.html('');
-    },
-
     load: function() {
       var self = this;
 
-      this.input.trigger('loading');
-      this.clear();
+      this.input.html('').trigger('loading');
 
-      $.getJSON(this.source, function(response) {
-        $.each(self.map(response), function(value) {
+      $.ajax(this.config).done(function(response) {
+        $.each(self.map(response), function(index, value) {
           if(typeof value === 'string') {
             value = [value, value];
           }
@@ -54,8 +46,8 @@
 
   this.Filler = Filler;
 
-  $.fn.filler = function(map) {
-    return new Filler(this, map);
+  $.fn.filler = function(config) {
+    return new Filler(this, config);
   };
 
 })(window.jQuery);
