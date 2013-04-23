@@ -6,7 +6,7 @@
 
 index.html
 ```html
-<select data-source="/options.json">
+<select>
 ```
 
 options.json
@@ -16,10 +16,14 @@ options.json
 
 script.js
 ```javascript
-$('select').filler();
+var select = $('select').filler({
+  url: '/options.json'
+}); //=> returns a Filler object
+
+select.load();
 ```
 
-Now your select will have 4 `<option>`s: Banana, Apple, Grape and Cranberry.
+Now your select will have 4 `<option>`: Banana, Apple, Grape and Cranberry.
 
 ## Settings
 
@@ -28,9 +32,9 @@ Now your select will have 4 `<option>`s: Banana, Apple, Grape and Cranberry.
 You can provide a `map` function to tell how do we handle the response.
 
 ```javascript
-$('select').filler(function(response) {
-  //...
-});
+select.map = function(response) {
+  return [];
+};
 ```
 
 The default function is:
@@ -45,10 +49,30 @@ function(response) {
 
 The function must return an array. Each element of the array can be a either another array or a string. In case of strings, they'll be used as both label and value of the options. In case of array, the first element will be the label and the second the value.
 
-### JSONP
+### AJAX
 
-You can enable JSONP simply by appending `?callback=?` at the end of the source URL:
+You can customize the AJAX settings by providing the new values in configuration hash:
 
 ```
-<select data-source="/options.json?callback=?"></select>
+$('select').filler({
+  url: '/basket',
+  method: 'POST',
+  data: {q: 'fruits'}
+});
+```
+
+### Events
+
+There are 2 new events being fired - `loading` and `loaded` - that happens, respectively, right before and after the request.
+
+```javascript
+select.on('loading', function() {
+  $(this).attr('disabled', true);
+});
+
+select.on('loaded', function() {
+  $(this).attr('disabled', false);
+});
+
+select.load();
 ```
