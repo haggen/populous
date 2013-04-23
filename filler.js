@@ -41,6 +41,10 @@
 
         self.input.trigger('loaded');
       });
+    },
+
+    on: function() {
+      this.input.on.apply(this.input, arguments);
     }
   };
 
