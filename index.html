@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Populous by haggen</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Populous</h1>
+        <p class="header">Populates a &lt;select&gt; with a remote JSON.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/haggen/populous/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/haggen/populous/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/haggen/populous">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/haggen">haggen</a></p>
+
+
+      </header>
+      <section>
+        <h1>Populous.js</h1>
+
+<blockquote>
+<p>Populates a <code>&lt;select&gt;</code> with a remote JSON.</p>
+</blockquote>
+
+<h2>Usage by example:</h2>
+
+<p>Your HTML file:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;select&gt;</span>
+</pre></div>
+
+<p>Your JSON, say <code>/options.json</code>:</p>
+
+<div class="highlight"><pre><span class="p">[</span><span class="s1">'Banana'</span><span class="p">,</span> <span class="s1">'Apple'</span><span class="p">,</span> <span class="s1">'Grape'</span><span class="p">,</span> <span class="s1">'Cranberry'</span><span class="p">]</span>
+</pre></div>
+
+<p>Your JavaScript:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">dropdown</span><span class="p">;</span>
+
+<span class="nx">dropdown</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">'/options.json'</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>And finally, you'll have to load it:</p>
+
+<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+</pre></div>
+
+<p>Bam! Your <code>&lt;select&gt;</code> now has 4 options: <code>Banana</code>, <code>Apple</code>, <code>Grape</code> and <code>Cranberry</code>.</p>
+
+<h2>Configuration</h2>
+
+<h3>Mapping the response</h3>
+
+<p>Populous use a <code>map</code> function to handle the response.</p>
+
+<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">map</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[];</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>The resulting array may comprise arrays (pairs of label and value) or strings (that will be used as both).</p>
+
+<p>Below is the default <code>map</code> function.</p>
+
+<div class="highlight"><pre><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">label</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="nx">label</span><span class="p">,</span> <span class="nx">label</span><span class="p">]];</span> <span class="c1">// jQuery#map make it flat, so we add depth</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>AJAX</h3>
+
+<p>The hash you provide when calling the plugin accepts the same values of <a href="http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings">jQuery AJAX settings</a>.</p>
+
+<pre><code>$('select').populous({
+  url: '/basket',
+  method: 'POST',
+  data: {all: 'fruits'}
+});
+</code></pre>
+
+<h2>API</h2>
+
+<h3>Events and states</h3>
+
+<p>There are 2 new events being fired - <code>loading</code> and <code>loaded</code> - that happens, respectively, right before and after the request that populates the <code>&lt;select&gt;</code>.</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'disabled'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'loaded'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'disabled'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Also, there's a data property being set to flag when it's loading.</p>
+
+<div class="highlight"><pre><span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="s1">'Wait!'</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="s1">'Ready!'</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>Updating value</h3>
+
+<p>Populous does a little patch to allow jQuery's standard method <code>val</code> to seamlessly update the <code>&lt;select&gt;</code> even when it isn't finished loading.</p>
+
+<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+<span class="nx">dropdown</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s1">'Hey!'</span><span class="p">);</span> <span class="c1">//=&gt; Will update when finish loading.</span>
+</pre></div>
+
+<h2>License</h2>
+
+<p>This project is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">Attribution-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Contribution</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Change it</li>
+<li>Commit with brief yet meaningful description</li>
+<li>Send pull request</li>
+</ol><p>Also, you could simply register an issue, or comment in one.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-41277078-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
