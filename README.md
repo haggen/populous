@@ -30,7 +30,7 @@ dropdown.load();
 
 Bam! Your `<select>` now has 4 options: `Banana`, `Apple`, `Grape` and `Cranberry`.
 
-## Configuration:
+## Configuration
 
 ### Mapping the response
 
@@ -100,3 +100,16 @@ Populous does a little patch to allow jQuery's standard method `val` to seamless
 dropdown.load();
 dropdown.val('Hey!'); //=> Will update when finish loading.
 ```
+
+## License
+
+This project is licensed under [Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/).
+
+## Contribution
+
+1. Fork it
+2. Change it
+3. Commit with brief yet meaningful description
+4. Send pull request
+
+Also, you could simply register an issue, or comment in one.
