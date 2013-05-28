@@ -1,78 +1,102 @@
-# Filler
+# Populous.js
 
-> Fill `<select>` from a remote source.
+> Populates a `<select>` with a remote JSON.
 
-## Usage by example
+## Usage by example:
 
-index.html
+Your HTML file:
 ```html
 <select>
 ```
 
-options.json
+Your JSON, say `/options.json`:
 ```javascript
 ['Banana', 'Apple', 'Grape', 'Cranberry']
 ```
 
-script.js
+Your JavaScript:
 ```javascript
-var select = $('select').filler({
-  url: '/options.json'
-}); //=> returns a Filler object
+var dropdown;
 
-select.load();
+dropdown = $('select').populous({
+  url: '/options.json'
+});
 ```
 
-Now your select will have 4 `<option>`: Banana, Apple, Grape and Cranberry.
+And finally, you'll have to load it:
+```javascript
+dropdown.load();
+```
 
-## Settings
+Bam! Your `<select>` now has 4 options: `Banana`, `Apple`, `Grape` and `Cranberry`.
+
+## Configuration:
 
 ### Mapping the response
 
-You can provide a `map` function to tell how do we handle the response.
+Populous use a `map` function to handle the response.
 
 ```javascript
-select.map = function(response) {
+dropdown.map = function(response) {
   return [];
 };
 ```
 
-The default function is:
+The resulting array may comprise arrays (pairs of label and value) or strings (that will be used as both).
+
+Below is the default `map` function.
 
 ```javascript
 function(response) {
-  return $.map(response, function(label, index) {
-    return [label, index];
+  return $.map(response, function(label) {
+    return [[label, label]]; // jQuery#map make it flat, so we add depth
   });
 }
 ```
 
-The function must return an array. Each element of the array can be a either another array or a string. In case of strings, they'll be used as both label and value of the options. In case of array, the first element will be the label and the second the value.
-
 ### AJAX
 
-You can customize the AJAX settings by providing the new values in configuration hash:
+The hash you provide when calling the plugin accepts the same values of [jQuery AJAX settings](http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings).
 
 ```
-$('select').filler({
+$('select').populous({
   url: '/basket',
   method: 'POST',
-  data: {q: 'fruits'}
+  data: {all: 'fruits'}
 });
 ```
 
-### Events
+## API
 
-There are 2 new events being fired - `loading` and `loaded` - that happens, respectively, right before and after the request.
+### Events and states
+
+There are 2 new events being fired - `loading` and `loaded` - that happens, respectively, right before and after the request that populates the `<select>`.
 
 ```javascript
-select.on('loading', function() {
+$('select').on('loading', function() {
   $(this).attr('disabled', true);
 });
 
-select.on('loaded', function() {
+$('select').on('loaded', function() {
   $(this).attr('disabled', false);
 });
+```
 
-select.load();
+Also, there's a data property being set to flag when it's loading.
+
+```javascript
+if($('select').data('loading')) {
+  alert('Wait!');
+} else {
+  alert('Ready!');
+}
+```
+
+### Updating value
+
+Populous does a little patch to allow jQuery's standard method `val` to seamlessly update the `<select>` even when it isn't finished loading.
+
+```javascript
+dropdown.load();
+dropdown.val('Hey!'); //=> Will update when finish loading.
 ```
