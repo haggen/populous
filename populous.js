@@ -1,46 +1,51 @@
 /**
- * Populous v1.2.0
- * Populates a `<select>` with a remote JSON.
+ * Populous v2.0.0
+ * Populates a `<select>` with a remote JSON
  * by Arthur Corenzan <arthur@corenzan.com>
- * more on //github.io/haggen/populous
+ * more on https://github.com/haggen/populous
  */
 ;(function($, undefined) {
 
-  $.valHooks._select = $.valHooks.select;
+  'use strict';
 
-  $.valHooks.select = {
-    get: function(element) {
-      return $.valHooks._select.get(element);
-    },
+  var Populous, hook;
 
-    set: function(element, value) {
-      element = $(element);
-
-      if(element.data('loading')) {
-        element.on('loaded.valhook', function() {
-          $.valHooks._select.set(element[0], value);
-          element.off('loaded.valhook');
-        });
-      } else {
-        $.valHooks._select.set(element[0], value);
-      }
-    }
+  Populous = function(element) {
+    this.initialize(element);
   };
 
-  var Populous = function(element, config) {
-    this.element = $(element);
-
-    this.config = $.extend({
+  Populous.options = {
+    source: {
       url: '',
       method: 'GET'
-    }, config);
-  };
+    },
 
-  Populous.prototype = {
     map: function(response) {
       return $.map(response, function(label) {
         return [[label, label]]; // jQuery#map make it flat, so we add depth
       });
+    }
+  };
+
+  Populous.prototype = {
+
+    initialize: function(element) {
+      this.element = $(element);
+      this.options = Populous.options;
+
+      this.options.source.url = this.element.attr('data-source-url') || '';
+
+      this.element.on('loaded', function() {
+        var that = $(this);
+
+        if(that.data('value')) {
+          that.val(that.data('value')).removeData('value');
+        }
+      });
+    },
+
+    configure: function(options) {
+      this.options = $.extend(this.options, options);
     },
 
     push: function(label, value) {
@@ -48,39 +53,67 @@
     },
 
     load: function() {
-      var self = this;
+      var that = this;
 
-      // Clear, trigger event and flag it
-      this.element.html('').trigger('loading').data('loading', true);
+      // Clear contents, trigger event and flag it
+      that.element.html('').trigger('loading').data('loading', true);
 
-      $.ajax(this.config).done(function(response) {
-        $.each(self.map(response), function(index, value) {
+      $.ajax(that.options.source).done(function(response) {
+        $.each(that.options.map(response), function(index, value) {
           if(typeof value === 'string') {
             value = [value, value];
           }
 
-          self.push.apply(self, value);
+          that.push.apply(that, value);
         });
 
-        self.element.trigger('loaded').data('loading', false);
+        // Done, trigger event and deflag it
+        that.element.trigger('loaded').data('loading', false);
+
       }).fail(function() {
         console.error(arguments);
       });
-    },
-
-    on: function() {
-      this.element.on.apply(this.element, arguments);
-    }
-
-    val: function() {
-      this.element.val.apply(this.element, arguments);
     }
   };
 
-  this.Populous = Populous;
+  hook = $.valHooks.select.set;
 
-  $.fn.populous = function(config) {
-    return new Populous(this, config);
+  Populous.hook = function(element, value) {
+    element = $(element);
+
+    if(element.data('loading')) {
+      element.data('value', value);
+    } else {
+      hook.set(element[0], value);
+    }
+  };
+
+  // Patch jQuery's value set hook to work with Populous
+  $.valHooks.select.set = Populous.hook;
+
+  // Plugin API
+  //
+  // $(...).populoud();
+  // $(...).populoud({...});
+  // $(...).populoud('load');
+  $.fn.populous = function(mixed) {
+    return this.each(function() {
+      var that, data;
+
+      that = $(this);
+      data = that.data('populous');
+
+      if(!data) {
+        data = new Populous(this);
+        that.data('populous', data);
+      }
+
+      if(typeof mixed === 'string') {
+        data[mixed]();
+      } else if(mixed) {
+        data.configure(mixed);
+      }
+    });
   };
 
 })(window.jQuery);

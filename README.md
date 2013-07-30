@@ -6,38 +6,50 @@
 
 Your HTML file:
 ```html
-<select>
+<select data-source-url="/options.json">
 ```
 
-Your JSON, say `/options.json`:
+Your JSON:
 ```javascript
-['Banana', 'Apple', 'Grape', 'Cranberry']
+["Banana", "Apple", "Grape", "Cranberry"]
 ```
 
 Your JavaScript:
 ```javascript
-var dropdown;
-
-dropdown = $('select').populous({
-  url: '/options.json'
-});
-```
-
-And finally, you'll have to load it:
-```javascript
-dropdown.load();
+$('select').populous('load');
 ```
 
 Bam! Your `<select>` now has 4 options: `Banana`, `Apple`, `Grape` and `Cranberry`.
 
 ## Configuration
 
+You can customize the options by providing a hash when calling the plugin:
+
+```javascript
+$('select').populous({...});
+
+### AJAX
+
+To configure the AJAX request, set a `source` key with [jQuery AJAX settings](http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings):
+
+```javascript
+$('select').populous({
+  source: {
+    url: '/basket',
+    method: 'POST',
+    data: {all: 'fruits'}
+  }
+});
+```
+
+Note that, by default, the method is set to `GET`, and the URL can be set using the attribute `data-source-url` on the `<select>` element.
+
 ### Mapping the response
 
 Populous use a `map` function to handle the response.
 
 ```javascript
-dropdown.map = function(response) {
+function(response) {
   return [];
 };
 ```
@@ -54,15 +66,13 @@ function(response) {
 }
 ```
 
-### AJAX
+You can provide your own map function by setting a `map` key with a function:
 
-The hash you provide when calling the plugin accepts the same values of [jQuery AJAX settings](http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings).
-
-```
+```javascript
 $('select').populous({
-  url: '/basket',
-  method: 'POST',
-  data: {all: 'fruits'}
+  map: function(response) {
+    // ...
+  }
 });
 ```
 
