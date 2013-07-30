@@ -27,6 +27,7 @@ You can customize the options by providing a hash when calling the plugin:
 
 ```javascript
 $('select').populous({...});
+```
 
 ### AJAX
 
