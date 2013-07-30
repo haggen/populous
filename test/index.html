@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Populous.js</title>
+</head>
+<body>
+
+<select data-source-url="options.json"></select>
+
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="../populous.js"></script>
+<script>
+$('select').populous();
+$('select').data('loading', true);
+$('select').val('Grape');
+$('select').populous('load');
+</script>
+</body>
+</html>
