@@ -1,7 +1,6 @@
 /**
  * Populous v2.0.0
  * Populates a `<select>` with a remote JSON
- * by Arthur Corenzan <arthur@corenzan.com>
  * more on https://github.com/haggen/populous
  */
 ;(function($, undefined) {
