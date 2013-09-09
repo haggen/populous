@@ -1,0 +1,34 @@
+{
+  "name": "populous",
+  "title": "Populous.js",
+  "description": "Populates a <select> with a remote JSON.",
+  "keywords": [
+    "json",
+    "select",
+    "dropdown"
+  ],
+  "version": "2.0.0",
+  "author": {
+    "name": "Arthur Corenzan",
+    "email": "arthur@corenzan.com"
+  },
+  "maintainers": [
+    {
+      "name": "Arthur Corenzan",
+      "email": "arthur@corenzan.com"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "CC BY-SA",
+      "url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    }
+  ],
+  "bugs": "https://github.com/haggen/populous/issues",
+  "homepage": "https://github.com/haggen/populous",
+  "docs": "https://github.com/haggen/populous/blob/master/README.md",
+  "download": "https://github.com/haggen/populous/archive/master.zip",
+  "dependencies": {
+    "jquery": ">=1.8"
+  }
+}
