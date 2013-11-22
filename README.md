@@ -67,7 +67,7 @@ function(response) {
 }
 ```
 
-You can provide your own map function by setting a `map` key with a function:
+You can provide your own map function:
 
 ```javascript
 $('select').populous({
@@ -81,7 +81,7 @@ $('select').populous({
 
 ### Events and states
 
-There are 2 new events being fired - `loading` and `loaded` - that happens, respectively, right before and after the request that populates the `<select>`.
+There are 2 new events being fired - `loading` and `loaded` - that happens, respectively, right before the AJAX request and right after the `<select>` is populated with its response.
 
 ```javascript
 $('select').on('loading', function() {
@@ -123,4 +123,4 @@ This project is licensed under [Creative Commons Attribution-ShareAlike 3.0 Unpo
 3. Commit with brief yet meaningful description
 4. Send pull request
 
-Also, you could simply register an issue, or comment in one.
+Also, you could report an issue, help to fix or simply comment in one.
