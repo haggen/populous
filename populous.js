@@ -1,5 +1,5 @@
 /**
- * Populous v2.0.0
+ * Populous v2.1.1
  * Populates a `<select>` with a remote JSON
  * more on https://github.com/haggen/populous
  */
@@ -54,10 +54,12 @@
     load: function() {
       var that = this;
 
-      // Clear contents, trigger event and flag it
-      that.element.html('').trigger('loading').data('loading', true);
+      // Trigger event and flag it
+      that.element.trigger('loading').data('loading', true);
 
       $.ajax(that.options.source).done(function(response) {
+        that.element.html('');
+
         $.each(that.options.map(response), function(index, value) {
           if(typeof value === 'string') {
             value = [value, value];
@@ -66,7 +68,7 @@
           that.push.apply(that, value);
         });
 
-        // Done, trigger event and deflag it
+        // Done, trigger event and remove flag
         that.element.trigger('loaded').data('loading', false);
 
       }).fail(function() {
@@ -95,7 +97,12 @@
   // $(...).populoud();
   // $(...).populoud({...});
   // $(...).populoud('load');
-  $.fn.populous = function(mixed) {
+  $.fn.populous = function() {
+    var args, mixed;
+
+    args = [].slice.call(arguments);
+    mixed = args.shift();
+
     return this.each(function() {
       var that, data;
 
@@ -108,7 +115,7 @@
       }
 
       if(typeof mixed === 'string') {
-        data[mixed]();
+        data[mixed].apply(data, args);
       } else if(mixed) {
         data.configure(mixed);
       }
