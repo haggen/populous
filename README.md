@@ -108,8 +108,8 @@ if($('select').data('loading')) {
 Populous does a little patch to allow jQuery's standard method `val` to seamlessly update the `<select>` even when it isn't finished loading.
 
 ```javascript
-dropdown.load();
-dropdown.val('Hey!'); //=> Will update when finish loading.
+$('select').populous('load');
+$('select').val('Hey!'); //=> Will update when finish loading.
 ```
 
 ## License
