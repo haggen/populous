@@ -83,7 +83,7 @@
     if(element.data('loading')) {
       element.data('value', value);
     } else {
-      hook.set(element[0], value);
+      hook(element[0], value);
     }
   };
 

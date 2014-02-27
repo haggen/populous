@@ -2,7 +2,11 @@
 
 > Populates a `<select>` with a remote JSON.
 
-## Usage by example:
+## Working Example
+
+http://jsfiddle.net/7tS3e/
+
+## Usage
 
 `index.html`:
 ```html
