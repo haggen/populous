@@ -1,22 +1,21 @@
-# Populous.js
+# Populous
 
 > Populates a `<select>` with a remote JSON.
 
 ## Usage by example:
 
-Your HTML file:
+`index.html`:
 ```html
-<select data-source-url="/options.json">
+<select data-source-url="options.json">
+
+<script>
+$('select').populous('load');
+</script>
 ```
 
-Your JSON:
+`options.json`:
 ```javascript
 ["Banana", "Apple", "Grape", "Cranberry"]
-```
-
-Your JavaScript:
-```javascript
-$('select').populous('load');
 ```
 
 Bam! Your `<select>` now has 4 options: `Banana`, `Apple`, `Grape` and `Cranberry`.
@@ -52,7 +51,7 @@ Populous use a `map` function to handle the response.
 ```javascript
 function(response) {
   return [];
-};
+}
 ```
 
 The resulting array may comprise arrays (pairs of label and value) or strings (that will be used as both).
@@ -112,9 +111,23 @@ $('select').populous('load');
 $('select').val('Hey!'); //=> Will update when finish loading.
 ```
 
+### AMD
+
+If you like [RequireJS](http://requirejs.org) you can easily make a module definition for Populous.
+
+```javascript
+define('Populous', ['jquery'], function($) {
+  
+  this.jQuery = $;
+
+  // Paste here the contents of populous.js
+
+});
+```
+
 ## License
 
-This project is licensed under [Creative Commons Attribution-ShareAlike 3.0 Unported](http://creativecommons.org/licenses/by-sa/3.0/).
+See [CC Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/deed.en_US)
 
 ## Contribution
 
