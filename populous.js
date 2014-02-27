@@ -1,15 +1,13 @@
-/**
- * Populous v2.1.1
- * Populates a `<select>` with a remote JSON
- * more on https://github.com/haggen/populous
- */
-;(function($, undefined) {
+// Populous-2.1.3 by <arthur@corenzan.com>
+// Populates a `<select>` with a remote JSON
+// more on github.com/haggen/populous
+;(function($) {
 
   'use strict';
 
-  var Populous, hook;
+  var hook;
 
-  Populous = function(element) {
+  this.Populous = function(element) {
     this.initialize(element);
   };
 
@@ -30,7 +28,7 @@
 
     initialize: function(element) {
       this.element = $(element);
-      this.options = Populous.options;
+      this.options = $.extend({}, Populous.options);
 
       this.options.source.url = this.element.attr('data-source-url') || '';
 
@@ -122,4 +120,4 @@
     });
   };
 
-})(window.jQuery);
+})(this.jQuery);
