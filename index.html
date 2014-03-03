@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -16,94 +15,113 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Populous</h1>
-        <p class="header">Populates a &lt;select&gt; with a remote JSON.</p>
+        <h1>Populous</h1>
+        <p>Populates a &lt;select&gt; with a remote JSON.</p>
+
+        <p class="view"><a href="https://github.com/haggen/populous">View the Project on GitHub <small>haggen/populous</small></a></p>
+
 
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/haggen/populous/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/haggen/populous/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/haggen/populous">View On GitHub</a></li>
+          <li><a href="https://github.com/haggen/populous/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/haggen/populous/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/haggen/populous">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/haggen">haggen</a></p>
-
-
       </header>
       <section>
-        <h1>Populous.js</h1>
+        <h1>
+<a name="populous" class="anchor" href="#populous"><span class="octicon octicon-link"></span></a>Populous</h1>
 
 <blockquote>
 <p>Populates a <code>&lt;select&gt;</code> with a remote JSON.</p>
 </blockquote>
 
-<h2>Usage by example:</h2>
+<h2>
+<a name="working-example" class="anchor" href="#working-example"><span class="octicon octicon-link"></span></a>Working Example</h2>
 
-<p>Your HTML file:</p>
+<p><a href="http://jsfiddle.net/7tS3e/">http://jsfiddle.net/7tS3e/</a></p>
 
-<div class="highlight"><pre><span class="nt">&lt;select&gt;</span>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p><code>index.html</code>:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;select</span> <span class="na">data-source-url=</span><span class="s">"options.json"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">(</span><span class="s1">'load'</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
 </pre></div>
 
-<p>Your JSON, say <code>/options.json</code>:</p>
+<p><code>options.json</code>:</p>
 
-<div class="highlight"><pre><span class="p">[</span><span class="s1">'Banana'</span><span class="p">,</span> <span class="s1">'Apple'</span><span class="p">,</span> <span class="s1">'Grape'</span><span class="p">,</span> <span class="s1">'Cranberry'</span><span class="p">]</span>
-</pre></div>
-
-<p>Your JavaScript:</p>
-
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">dropdown</span><span class="p">;</span>
-
-<span class="nx">dropdown</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">({</span>
-  <span class="nx">url</span><span class="o">:</span> <span class="s1">'/options.json'</span>
-<span class="p">});</span>
-</pre></div>
-
-<p>And finally, you'll have to load it:</p>
-
-<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+<div class="highlight highlight-javascript"><pre><span class="p">[</span><span class="s2">"Banana"</span><span class="p">,</span> <span class="s2">"Apple"</span><span class="p">,</span> <span class="s2">"Grape"</span><span class="p">,</span> <span class="s2">"Cranberry"</span><span class="p">]</span>
 </pre></div>
 
 <p>Bam! Your <code>&lt;select&gt;</code> now has 4 options: <code>Banana</code>, <code>Apple</code>, <code>Grape</code> and <code>Cranberry</code>.</p>
 
-<h2>Configuration</h2>
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
-<h3>Mapping the response</h3>
+<p>You can customize the options by providing a hash when calling the plugin:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">({...});</span>
+</pre></div>
+
+<h3>
+<a name="ajax" class="anchor" href="#ajax"><span class="octicon octicon-link"></span></a>AJAX</h3>
+
+<p>To configure the AJAX request, set a <code>source</code> key with <a href="http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings">jQuery AJAX settings</a>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">({</span>
+  <span class="nx">source</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">'/basket'</span><span class="p">,</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="nx">all</span><span class="o">:</span> <span class="s1">'fruits'</span><span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Note that, by default, the method is set to <code>GET</code>, and the URL can be set using the attribute <code>data-source-url</code> on the <code>&lt;select&gt;</code> element.</p>
+
+<h3>
+<a name="mapping-the-response" class="anchor" href="#mapping-the-response"><span class="octicon octicon-link"></span></a>Mapping the response</h3>
 
 <p>Populous use a <code>map</code> function to handle the response.</p>
 
-<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">map</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">[];</span>
-<span class="p">};</span>
+<span class="p">}</span>
 </pre></div>
 
 <p>The resulting array may comprise arrays (pairs of label and value) or strings (that will be used as both).</p>
 
 <p>Below is the default <code>map</code> function.</p>
 
-<div class="highlight"><pre><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">label</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">[[</span><span class="nx">label</span><span class="p">,</span> <span class="nx">label</span><span class="p">]];</span> <span class="c1">// jQuery#map make it flat, so we add depth</span>
   <span class="p">});</span>
 <span class="p">}</span>
 </pre></div>
 
-<h3>AJAX</h3>
+<p>You can provide your own map function:</p>
 
-<p>The hash you provide when calling the plugin accepts the same values of <a href="http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings">jQuery AJAX settings</a>.</p>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">({</span>
+  <span class="nx">map</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<pre><code>$('select').populous({
-  url: '/basket',
-  method: 'POST',
-  data: {all: 'fruits'}
-});
-</code></pre>
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
-<h2>API</h2>
+<h3>
+<a name="events-and-states" class="anchor" href="#events-and-states"><span class="octicon octicon-link"></span></a>Events and states</h3>
 
-<h3>Events and states</h3>
+<p>There are 2 new events being fired - <code>loading</code> and <code>loaded</code> - that happens, respectively, right before the AJAX request and right after the <code>&lt;select&gt;</code> is populated with its response.</p>
 
-<p>There are 2 new events being fired - <code>loading</code> and <code>loaded</code> - that happens, respectively, right before and after the request that populates the <code>&lt;select&gt;</code>.</p>
-
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'disabled'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 <span class="p">});</span>
 
@@ -114,40 +132,58 @@
 
 <p>Also, there's a data property being set to flag when it's loading.</p>
 
-<div class="highlight"><pre><span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight highlight-javascript"><pre><span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'loading'</span><span class="p">))</span> <span class="p">{</span>
   <span class="nx">alert</span><span class="p">(</span><span class="s1">'Wait!'</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
   <span class="nx">alert</span><span class="p">(</span><span class="s1">'Ready!'</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
-<h3>Updating value</h3>
+<h3>
+<a name="updating-value" class="anchor" href="#updating-value"><span class="octicon octicon-link"></span></a>Updating value</h3>
 
 <p>Populous does a little patch to allow jQuery's standard method <code>val</code> to seamlessly update the <code>&lt;select&gt;</code> even when it isn't finished loading.</p>
 
-<div class="highlight"><pre><span class="nx">dropdown</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
-<span class="nx">dropdown</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s1">'Hey!'</span><span class="p">);</span> <span class="c1">//=&gt; Will update when finish loading.</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">populous</span><span class="p">(</span><span class="s1">'load'</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">'Hey!'</span><span class="p">);</span> <span class="c1">//=&gt; Will update when finish loading.</span>
 </pre></div>
 
-<h2>License</h2>
+<h3>
+<a name="amd" class="anchor" href="#amd"><span class="octicon octicon-link"></span></a>AMD</h3>
 
-<p>This project is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">Attribution-ShareAlike 3.0 Unported</a>.</p>
+<p>If you like <a href="http://requirejs.org">RequireJS</a> you can easily make a module definition for Populous.</p>
 
-<h2>Contribution</h2>
+<div class="highlight highlight-javascript"><pre><span class="nx">define</span><span class="p">(</span><span class="s1">'Populous'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'jquery'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">=</span> <span class="nx">$</span><span class="p">;</span>
+
+  <span class="c1">// Paste here the contents of populous.js</span>
+
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>See <a href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US">CC Attribution-ShareAlike 4.0 International</a></p>
+
+<h2>
+<a name="contribution" class="anchor" href="#contribution"><span class="octicon octicon-link"></span></a>Contribution</h2>
 
 <ol>
 <li>Fork it</li>
 <li>Change it</li>
 <li>Commit with brief yet meaningful description</li>
 <li>Send pull request</li>
-</ol><p>Also, you could simply register an issue, or comment in one.</p>
+</ol><p>Also, you could report an issue, help to fix or simply comment in one.</p>
       </section>
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p>This project is maintained by <a href="https://github.com/haggen">haggen</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		          <script type="text/javascript">
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
