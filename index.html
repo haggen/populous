@@ -38,12 +38,22 @@
 <h2>
 <a name="working-example" class="anchor" href="#working-example"><span class="octicon octicon-link"></span></a>Working Example</h2>
 
-<p><a href="http://jsfiddle.net/7tS3e/">http://jsfiddle.net/7tS3e/</a></p>
+<select data-source-url="options.json">
+  <option>Loading...</option>
+</select>
+
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="populous.js"></script>
+<script>
+$('select').populous('load');
+</script>
+
+<p></p>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p><code>index.html</code>:</p>
+<p><strong>index.html</strong>:</p>
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;select</span> <span class="na">data-source-url=</span><span class="s">"options.json"</span><span class="nt">&gt;</span>
 
@@ -52,7 +62,7 @@
 <span class="nt">&lt;/script&gt;</span>
 </pre></div>
 
-<p><code>options.json</code>:</p>
+<p><strong>options.json</strong>:</p>
 
 <div class="highlight highlight-javascript"><pre><span class="p">[</span><span class="s2">"Banana"</span><span class="p">,</span> <span class="s2">"Apple"</span><span class="p">,</span> <span class="s2">"Grape"</span><span class="p">,</span> <span class="s2">"Cranberry"</span><span class="p">]</span>
 </pre></div>
