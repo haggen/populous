@@ -1,13 +1,13 @@
-// Populous-2.1.3 by <arthur@corenzan.com>
+// Populous-2.1.4 by <arthur@corenzan.com>
 // Populates a `<select>` with a remote JSON
 // more on github.com/haggen/populous
 ;(function($) {
 
   'use strict';
 
-  var hook;
+  var Populous, hook;
 
-  this.Populous = function(element) {
+  var Populous = function(element) {
     this.initialize(element);
   };
 
