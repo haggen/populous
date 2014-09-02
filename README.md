@@ -4,7 +4,7 @@
 
 ## Working Example
 
-http://jsfiddle.net/7tS3e/
+http://jsfiddle.net/haggen/7tS3e/7/
 
 ## Usage
 
@@ -26,7 +26,7 @@ Bam! Your `<select>` now has 4 options: `Banana`, `Apple`, `Grape` and `Cranberr
 
 ## Configuration
 
-You can customize the options by providing a hash when calling the plugin:
+You can customize the options by providing a hash when calling the plugin, like this:
 
 ```javascript
 $('select').populous({...});
@@ -34,7 +34,7 @@ $('select').populous({...});
 
 ### AJAX
 
-To configure the AJAX request, set a `source` key with [jQuery AJAX settings](http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings):
+To configure the AJAX request, provide a `source` option with regular [jQuery AJAX settings](http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings):
 
 ```javascript
 $('select').populous({
@@ -46,7 +46,7 @@ $('select').populous({
 });
 ```
 
-Note that, by default, the method is set to `GET`, and the URL can be set using the attribute `data-source-url` on the `<select>` element.
+Note that, by default, the method is `GET`, and the URL can be set using the attribute `data-source-url` on the `<select>` element.
 
 ### Mapping the response
 
@@ -58,9 +58,9 @@ function(response) {
 }
 ```
 
-The resulting array may comprise arrays (pairs of label and value) or strings (that will be used as both).
+The resulting array may comprise arrays (pairs of label and value, in the order) or strings (that will be used as both).
 
-Below is the default `map` function.
+Below is the default `map` option:
 
 ```javascript
 function(response) {
@@ -70,12 +70,12 @@ function(response) {
 }
 ```
 
-You can provide your own map function:
+But you can provide your own mapping function:
 
 ```javascript
 $('select').populous({
   map: function(response) {
-    // ...
+    return [];
   }
 });
 ```
