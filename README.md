@@ -4,7 +4,7 @@
 
 ## Working Example
 
-http://jsfiddle.net/haggen/7tS3e/7/
+http://jsfiddle.net/haggen/7tS3e/27/
 
 ## Usage
 
@@ -58,7 +58,7 @@ function(response) {
 }
 ```
 
-The resulting array may comprise arrays (pairs of label and value, in the order) or strings (that will be used as both).
+The resulting array may comprise arrays (pairs of label and value, in that order) or strings (that will be used as both).
 
 Below is the default `map` option:
 
@@ -121,7 +121,7 @@ If you like [RequireJS](http://requirejs.org) you can easily make a module defin
 
 ```javascript
 define('Populous', ['jquery'], function($) {
-  
+
   this.jQuery = $;
 
   // Paste here the contents of populous.js
