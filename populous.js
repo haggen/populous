@@ -1,4 +1,4 @@
-// Populous-2.1.4 by <arthur@corenzan.com>
+// Populous-2.1.5 by <arthur@corenzan.com>
 // Populates a `<select>` with a remote JSON
 // more on github.com/haggen/populous
 ;(function($) {
@@ -28,9 +28,9 @@
 
     initialize: function(element) {
       this.element = $(element);
-      this.options = $.extend({}, Populous.options);
+      this.options = {};
 
-      this.options.source.url = this.element.attr('data-source-url') || '';
+      this.configure(Populous.options);
 
       this.element.on('loaded', function() {
         var that = $(this);
@@ -43,6 +43,7 @@
 
     configure: function(options) {
       this.options = $.extend(this.options, options);
+      this.options.source.url = this.element.attr('data-source-url') || this.options.source.url;
     },
 
     push: function(label, value) {
@@ -92,9 +93,9 @@
 
   // Plugin API
   //
-  // $(...).populoud();
-  // $(...).populoud({...});
-  // $(...).populoud('load');
+  // $(...).populous();
+  // $(...).populous({...});
+  // $(...).populous('load');
   $.fn.populous = function() {
     var args, mixed;
 
